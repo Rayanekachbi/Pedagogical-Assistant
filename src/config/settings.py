@@ -2,8 +2,8 @@
 # Paramètres globaux et configurables de l'application AP-UP
 import os
 # ── Serveur d'inférence ──────────────────────────────────────────────
-#LLM_BASE_URL = "http://172.27.72.55:11434/v1"  # Pléiade (université)
-LLM_BASE_URL = "http://host.docker.internal:11434/v1"   # Ollama (développement local)
+LLM_BASE_URL = os.getenv("LLM_BASE_URL", "http://172.27.72.55:11434/v1")  # Pléiade (université)
+#LLM_BASE_URL = "http://host.docker.internal:11434/v1"   # Ollama (développement local)
 LLM_MODEL = "phi4-mini:latest"                          # modèle à utiliser
 LLM_TEMPERATURE = 0.1                           # fidélité au cours (0=strict, 1=créatif)
 LLM_API_KEY = "ollama"                          # ignoré par Pléiade/Ollama mais requis
@@ -34,7 +34,7 @@ DATA_DIR = "data"  # répertoire des documents uploadés
 SIMILARITY_THRESHOLD_OUT_HIGH = 0.50
 SIMILARITY_THRESHOLD_OUT_LOW = 0.30
 SLM_MODEL = "ministral-3:3b"
-OLLAMA_BASE_URL = "http://host.docker.internal:11434/v1"
+OLLAMA_BASE_URL = "http://172.27.72.55:11434/v1"
 MESSAGE_QUESTION_BLOQUEE = "Votre question ne semble pas liée au contenu du module sélectionné. Veuillez reformuler ou choisir un autre module."
 MESSAGE_REPONSE_BLOQUEE = "La réponse générée ne peut pas être fournie car elle ne semble pas ancrée dans le contenu du cours."
 

@@ -22,7 +22,7 @@ services:
       - db
     environment:
       DATABASE_URL: postgresql://user:password@db:5432/apup
-      LLM_BASE_URL: http://host.docker.internal:11434/v1
+      LLM_BASE_URL: http://172.27.72.55:11434/v1
     volumes:
       - ./data:/app/data
       - ./src:/app/src

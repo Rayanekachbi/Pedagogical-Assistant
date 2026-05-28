@@ -229,6 +229,35 @@ def get_chunks_par_module(db: Session, module_id: int) -> list[list]:
     return [chunk.embedding for chunk in chunks]
 
 
+def get_chunks_preview_par_module(db: Session, module_id: int, limit: int = 5) -> list[dict]:
+    """
+    Recupere quelques chunks avec texte + vecteur pour construire le prompt SLM.
+    """
+
+    chunks = (
+        db.query(Chunk)
+        .join(Chunk.document)
+        .filter_by(module_id=module_id)
+        .order_by(Chunk.id.asc())
+        .limit(limit)
+        .all()
+    )
+
+    return [
+        {
+            "id": chunk.id,
+            "text": chunk.contenu_texte,
+            "vector": chunk.embedding,
+            "document_id": chunk.document_id,
+            "page": chunk.page_source,
+            "section": chunk.section,
+            "chunk_index": chunk.chunk_index,
+            "source": chunk.document.titre,
+        }
+        for chunk in chunks
+    ]
+
+
 
 def get_historique_recent(
     db: Session,

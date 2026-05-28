@@ -83,7 +83,10 @@ def send_message(payload: ChatMessageRequest, db: Session = Depends(get_database
 
     try:
         from src.Backend.database.models import Historique, Module
-        from src.Backend.database.vector_store import get_chunks_par_module
+        from src.Backend.database.vector_store import (
+            get_chunks_par_module,
+            get_chunks_preview_par_module,
+        )
         from src.Backend.filtrage.filtering import FilteringPipeline
         from src.Backend.rag.rag_engine import RAGEngine
 
@@ -95,6 +98,7 @@ def send_message(payload: ChatMessageRequest, db: Session = Depends(get_database
             )
 
         chunk_vectors = get_chunks_par_module(db, payload.module_id)
+        chunks_preview = get_chunks_preview_par_module(db, payload.module_id)
         if not chunk_vectors:
             raise ValueError(
                 f"Aucun chunk trouvé pour le module {payload.module_id}. "
@@ -102,7 +106,7 @@ def send_message(payload: ChatMessageRequest, db: Session = Depends(get_database
             )
 
         filtering = FilteringPipeline()
-        input_result = filtering.validate_input(question, chunk_vectors)
+        input_result = filtering.validate_input(question, chunk_vectors, chunks_preview)
         if not input_result.is_valid:
             return {
                 "id": 0,
