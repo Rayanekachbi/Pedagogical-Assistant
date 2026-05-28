@@ -8,6 +8,12 @@
 
 Ce projet apporte une solution sécurisée face aux enjeux de propriété intellectuelle et aux « hallucinations » des IA génératives grand public.
 
+--- 
+
+# 🏗️ Technical Architecture 
+
+![Technical Architecture](img/architecture.png) 
+
 ---
 
 # 📸 Aperçu de l'application
